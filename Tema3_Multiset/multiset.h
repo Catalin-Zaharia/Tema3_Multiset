@@ -3,6 +3,11 @@
 #include <stdexcept>
 #include <cstring>
 
+template <class classType> class multiset;
+
+template <class classType>
+std::ostream& operator<< (std::ostream&, const multiset<classType>&);
+
 template <class classType> class functorAdd {
 	classType data;
 public:
@@ -78,8 +83,7 @@ public:
 	template <class Func>
 	void modify(Func &functor);
 	
-	template <class classType>
-	friend std::ostream& operator<< (std::ostream& output, const multiset<classType> & obj);
+	friend std::ostream& operator<<<classType>(std::ostream&, const multiset<classType> &);
 };
 
 template<class classType>
@@ -319,7 +323,7 @@ inline int multiset<classType>::elemCount()
 }
 
 template<class classType>
-std::ostream& operator<< (std::ostream& output, const multiset<classType> & obj) {
+std::ostream& operator<<(std::ostream& output, const multiset<classType> & obj) {
 
 	output << "SRD: ";
 	obj.SRDcout(obj.root, output);
