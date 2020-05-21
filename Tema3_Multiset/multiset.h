@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <stdexcept>
+#include <cstring>
 
 template <class classType> class functorAdd {
 	classType data;
@@ -30,7 +31,7 @@ template <class classType> class multiset // am presupus ca classType poate fi c
 
 		classType data=NULL;
 
-		node* left = nullptr, * right = nullptr;
+		node* left = NULL, * right = NULL;
 
 	} *root;
 	int size;
@@ -83,7 +84,7 @@ public:
 
 template<class classType>
 multiset<classType>::multiset() : 
-	root (nullptr), 
+	root (NULL), 
 	size (0)
 {}
 
@@ -105,7 +106,7 @@ inline multiset<classType>& multiset<classType>::operator=(const multiset& obj)
 template<class classType>
 inline void multiset<classType>::Del(node* &current)
 {
-	if (current != nullptr) {
+	if (current != NULL) {
 
 		Del(current->left);
 
@@ -123,7 +124,7 @@ multiset<classType>::~multiset()
 
 template<class classType>
 inline void multiset<classType>::insert(classType x, node*& current) {
-	if (current == nullptr) {
+	if (current == NULL) {
 		current = new node;
 		current->data = x;
 		this->size++;
@@ -141,7 +142,7 @@ inline void multiset<classType>::insert(classType x, node*& current) {
 template<class classType>
 inline void multiset<classType>::remove(classType data, node*& current)
 {
-	if (current != nullptr) 
+	if (current != NULL) 
 	{
 		if (current->data == data) {
 			pop(current);
@@ -157,7 +158,7 @@ inline void multiset<classType>::remove(classType data, node*& current)
 template<class classType>
 inline void multiset<classType>::SRDcount(node* current, int &counter, classType &lastSeen)
 {
-	if (current != nullptr) {
+	if (current != NULL) {
 
 		SRDcount(current->left, counter, lastSeen);
 
@@ -174,7 +175,7 @@ inline void multiset<classType>::SRDcount(node* current, int &counter, classType
 template<class classType>
 inline void multiset<classType>::SRDcout (const node* current, std::ostream &output)const
 {
-	if (current != nullptr) {
+	if (current != NULL) {
 
 		SRDcout(current->left, output);
 
@@ -188,7 +189,7 @@ inline void multiset<classType>::SRDcout (const node* current, std::ostream &out
 template<class classType>
 inline void multiset<classType>::RSDcout (const node* current, std::ostream& output)const
 {
-	if (current != nullptr) {
+	if (current != NULL) {
 
 		output << current->data << ' ';
 
@@ -202,7 +203,7 @@ inline void multiset<classType>::RSDcout (const node* current, std::ostream& out
 template<class classType>
 inline void multiset<classType>::RSDcopy(const node* original, node *&destination)
 {
-	if (original != nullptr) {
+	if (original != NULL) {
 		destination = new node;
 
 		std::memcpy(destination, original, sizeof(original));
@@ -216,22 +217,22 @@ inline void multiset<classType>::RSDcopy(const node* original, node *&destinatio
 template<class classType>
 inline void multiset<classType>::pop(node*& current)
 {
-	if (current->left == nullptr) {
-		if (current->right == nullptr) {
+	if (current->left == NULL) {
+		if (current->right == NULL) {
 			delete current;
-			current = nullptr;
+			current = NULL;
 		}
 		else {
 			current = current->right;
 		}
 	}
 	else {
-		if (current->right == nullptr) {
+		if (current->right == NULL) {
 			current = current->left;
 		}
 		else {
 			node*& replacement = current->left;
-			while (replacement->right != nullptr)
+			while (replacement->right != NULL)
 				replacement = replacement->right;
 			current->data = replacement->data;
 			pop(replacement);
@@ -249,13 +250,13 @@ template<class classType>
 inline void multiset<classType>::pop(classType data)
 {
 	node* current = this->root;
-	while (current != nullptr and current->data != data) {
+	while (current != NULL and current->data != data) {
 		if (data > current->data)
 			current = current->right;
 		else
 			current = current->left;
 	}
-	if (current!=nullptr) {
+	if (current!=NULL) {
 		pop(current);
 		size--;
 	}
@@ -269,15 +270,15 @@ template<class classType>
 inline int multiset<classType>::multiplicity(classType data)
 {
 	node* current = this->root;
-	while (current != nullptr and current->data != data) {
+	while (current != NULL and current->data != data) {
 		if (data > current->data)
 			current = current->right;
 		else
 			current = current->left;
 	}
-	if (current != nullptr) {
+	if (current != NULL) {
 		int count = 1;
-		while (current->left != nullptr) {
+		while (current->left != NULL) {
 			current = current->left;
 			count++;
 		}
@@ -290,13 +291,13 @@ template<class classType>
 inline bool multiset<classType>::has(classType data)
 {
 	node* current = this->root;
-	while (current != nullptr and current->data != data) {
+	while (current != NULL and current->data != data) {
 		if (data > current->data)
 			current = current->right;
 		else
 			current = current->left;
 	}
-	if (current != nullptr) {
+	if (current != NULL) {
 		return true;
 	}
 	return false;
@@ -332,7 +333,7 @@ template<class classType>
 template<class Func>
 inline void multiset<classType>::SRDfunctor(node*& current, Func &functor)
 {
-	if (current != nullptr) {
+	if (current != NULL) {
 		
 		current->data = functor(current->data);
 
