@@ -102,6 +102,7 @@ multiset<classType>::multiset(const multiset &obj)
 template<class classType>
 inline multiset<classType>& multiset<classType>::operator=(const multiset& obj)
 {
+	Del(this->root);
 	this->size = obj.size;
 	RSDcopy(obj.root, this->root);
 	return *this;
